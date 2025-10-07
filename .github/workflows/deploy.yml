@@ -1,0 +1,72 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Build site structure
+        run: |
+          echo "📦 Preparing site for deployment..."
+          mkdir -p _site
+          
+          # Copy all necessary files
+          cp -r templates/* _site/
+          cp -r static _site/
+          
+          # Rename index_modular.html to index.html for GitHub Pages
+          if [ -f "_site/index_modular.html" ]; then
+            mv _site/index_modular.html _site/index.html
+          fi
+          
+          # Update paths in index.html for GitHub Pages
+          sed -i 's|href="../static/css/|href="./static/css/|g' _site/index.html
+          sed -i 's|src="../static/js/|src="./static/js/|g' _site/index.html
+          
+          # Create README for GitHub Pages
+          echo "# craftGPT" > _site/README.md
+          echo "A minimalist AI chatbot with offline chat history" >> _site/README.md
+          
+          echo "✅ Site structure prepared"
+          ls -la _site/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
