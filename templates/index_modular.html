@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>craftGPT</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <div class="menu-icon">
+            <span class="line line-top"></span>
+            <span class="line line-bottom"></span>
+        </div>
+    </button>
+    
+    <!-- Main App Shell -->
+    <div class="app-shell">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar" aria-label="Conversation history">
+            <div class="sidebar__brand">
+                <div class="brand__icon" aria-hidden="true">🌿</div>
+                <div>
+                    <p class="brand__name">craftGPT</p>
+                    <p class="brand__tagline">Minimal assistant</p>
+                </div>
+            </div>
+
+            <button class="sidebar__new-chat" id="newChatBtn" type="button" aria-label="New conversation">
+            </button>
+
+            <nav class="sidebar__history" id="conversationList" aria-live="polite">
+                <p class="history__empty">No conversations yet</p>
+            </nav>
+
+            <footer class="sidebar__footer">
+                <span id="themeIndicator">Auto theme · Minimalist design</span>
+            </footer>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat" aria-label="Chat area">
+            <header class="chat__header">
+                <div>
+                    <h1><strong>craftGPT</strong></h1>
+                    <p class="chat__subtitle">Ask anything</p>
+                </div>
+            </header>
+
+            <section class="chat__history" id="chatMessages" aria-live="polite">
+                <!-- Welcome Section -->
+                <div class="welcome-section" id="welcomeSection">
+                    <h2 class="welcome-title">What can I help you with?</h2>
+                    <div class="welcome-buttons">
+                        <button class="prompt-button" data-prompt="Create an image for me">
+                            <span class="prompt-icon icon-green">🎨</span>
+                            <span>Create image</span>
+                        </button>
+                        <button class="prompt-button" data-prompt="Help me brainstorm ideas">
+                            <span class="prompt-icon icon-blue">💡</span>
+                            <span>Brainstorm</span>
+                        </button>
+                        <button class="prompt-button" data-prompt="Make a plan for me">
+                            <span class="prompt-icon icon-yellow">📘</span>
+                            <span>Make a plan</span>
+                        </button>
+                        <button class="prompt-button" data-prompt="Analyze this data">
+                            <span class="prompt-icon icon-orange">🧠</span>
+                            <span>Analyze data</span>
+                        </button>
+                        <button class="prompt-button" data-prompt="Help me write">
+                            <span class="prompt-icon icon-purple">✍️</span>
+                            <span>Help me write</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chat Input Form -->
+            <form class="chat__input" id="chatForm">
+                <!-- File Upload Button -->
+                <label class="file-upload-btn" aria-label="Upload file">
+                    <div class="file-icon">
+                        <span class="file-icon-line"></span>
+                        <span class="file-icon-line"></span>
+                        <span class="file-icon-line"></span>
+                    </div>
+                    <input type="file" id="fileInput" accept=".csv,.txt,.pdf,.doc,.docx,.xls,.xlsx" aria-label="Upload file">
+                </label>
+
+                <!-- Message Input -->
+                <div class="chat__input-wrapper">
+                    <label for="messageInput" class="visually-hidden">Your message</label>
+                    <textarea id="messageInput" name="message" rows="1" placeholder="Type your message..." autocomplete="off"></textarea>
+                    <button id="sendBtn" type="submit" aria-label="Send message"></button>
+                </div>
+
+                <!-- Microphone Button -->
+                <button type="button" class="mic-btn" id="micBtn" aria-label="Voice input">
+                    <div class="mic-icon"></div>
+                </button>
+
+                <!-- File Info Display -->
+                <div class="file-info" id="fileInfo">
+                    <div class="file-info-text">
+                        <span>🗐</span>
+                        <span id="fileName">No file selected</span>
+                        <span id="fileSize"></span>
+                    </div>
+                    <button type="button" class="remove-file-btn" id="removeFileBtn" aria-label="Remove file">✕</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- External JavaScript -->
+    <script src="../static/js/api-service.js"></script>
+    <script src="../static/js/app.js"></script>
+</body>
+</html>
